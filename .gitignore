@@ -1,0 +1,9 @@
+# Ignore environment variables file
+.env
+
+# Ignore node_modules folder
+node_modules/
+
+# Optional: Ignore logs and system files
+*.log
+.DS_Store
