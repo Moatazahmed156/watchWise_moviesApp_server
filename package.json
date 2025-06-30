@@ -7,7 +7,7 @@
   "description": "",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^1.10.0",
