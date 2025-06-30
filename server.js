@@ -21,6 +21,9 @@ app.use((req, res, next) => {
 });
 
 // ================= USERS =================
+app.get("/", (req, res) => {
+  res.send("WatchWise API is live 🚀");
+});
 
 app.get("/users", async (req, res) => {
   try {
