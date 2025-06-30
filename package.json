@@ -2,7 +2,7 @@
   "name": "watchwise",
   "version": "1.0.0",
   "main": "server.js",
-  "author": "Moataz AHmed",
+  "author": "Moataz Ahmed",
   "license": "ISC",
   "description": "",
   "scripts": {

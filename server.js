@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const db = require("./DB/db");
 const cors = require("cors");
@@ -9,7 +10,6 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(cors());
-require("dotenv").config();
 // Logger Middleware
 app.use((req, res, next) => {
   const log = `${req.method} ${req.url} - ${new Date().toISOString()}`;
