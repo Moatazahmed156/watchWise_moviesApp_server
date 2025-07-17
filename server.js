@@ -7,6 +7,7 @@ const FavoriteMovies = require("./DB/favoriteList");
 const fs = require("fs");
 const axios = require('axios');
 const bcrypt = require("bcrypt");
+const { shuffleArray } = require('./helpers/shuffleArray');
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
@@ -152,49 +153,41 @@ app.get("/favorite/:movieId/:userId", async (req, res) => {
 app.get("/recommendations/:userId", async (req, res) => {
   const { userId } = req.params;
   const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
   try {
     const favorites = await FavoriteMovies.findAll({ where: { userId } });
-    const movieIds = favorites.map(fav => fav.movieId).reverse();
+    const movieIds = favorites.map(fav => parseInt(fav.movieId)).reverse();
+
     const recommendedMap = new Map();
+
     for (const id of movieIds) {
-      let tmdbId = null;
+      if (isNaN(id)) {
+        console.warn(`Invalid TMDB movie ID: ${id}`);
+        continue;
+      }
+
       try {
-        if (id.startsWith("tt")) {
-          const findRes = await axios.get(`https://api.themoviedb.org/3/find/${id}`, {
-            params: {
-              api_key: TMDB_API_KEY,
-              external_source: "imdb_id",
-            },
-          });
-          const movieResult = findRes.data.movie_results[0];
-          if (!movieResult) {
-            console.warn(`No TMDB match found for IMDb ID ${id}`);
-            continue;
-          }
-          tmdbId = movieResult.id;
-        } 
-        else if (!isNaN(id)) {
-          tmdbId = id;
-        } else {
-          console.warn(`Invalid movie ID format: ${id}`);
-          continue;
-        }
-        const recRes = await axios.get(`https://api.themoviedb.org/3/movie/${tmdbId}/recommendations`, {
+        const recRes = await axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations`, {
           params: {
             api_key: TMDB_API_KEY,
             language: "en-US",
           },
         });
+
         recRes.data.results.forEach(movie => {
           if (!recommendedMap.has(movie.id)) {
             recommendedMap.set(movie.id, movie);
           }
         });
+
       } catch (err) {
-        console.warn(`Failed to fetch recommendations for ID=${id}:`, err.response?.status || err.message);
+        console.warn(`Failed to fetch recommendations for TMDB ID=${id}:`, err.response?.status || err.message);
       }
     }
-    res.status(200).json(Array.from(recommendedMap.values()));
+
+    const recommendations = shuffleArray(Array.from(recommendedMap.values()));
+    res.status(200).json(recommendations);
+
   } catch (err) {
     console.error("Recommendation error:", err.message);
     res.status(500).json({ error: "Failed to fetch recommendations" });
