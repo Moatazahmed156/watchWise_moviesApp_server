@@ -53,7 +53,6 @@ Welcome to the **WatchWise** backend! This server-side API is built with **Node.
 | GET    | `/user/:id`        | Get a user by ID          |
 | POST   | `/signup`          | Create new user           |
 | POST   | `/login`           | Login by email            |
-| PATCH  | `/user/:id`        | Update user name          |
 
 ---
 
