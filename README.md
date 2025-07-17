@@ -108,25 +108,7 @@ node server.js
 
 ---
 
-## 📝 Logs
-
-All API requests are logged automatically in `logs.txt` with the format:
-
-```
-GET /users - 2025-07-17T18:45:30.123Z
-```
-
-This helps in monitoring and debugging requests.
-
----
-
-## 🛠 Database Notes
-
-Make sure your MySQL server is running. Sequelize will sync models automatically on server start. You may customize DB settings in `DB/db.js`.
-
----
-
 ## 📬 Contact
 
 Built with ❤️ by **Moataz Ahmed**  
-Connect via [LinkedIn]([https://www.linkedin.com/in/moataz-ahmed-b02438255/])
+Connect via [LinkedIn](https://www.linkedin.com/in/moataz-ahmed-b02438255/)
