@@ -129,4 +129,4 @@ Make sure your MySQL server is running. Sequelize will sync models automatically
 ## 📬 Contact
 
 Built with ❤️ by **Moataz Ahmed**  
-Connect via [LinkedIn]([https://www.linkedin.com](https://www.linkedin.com/in/moataz-ahmed-b02438255/))
+Connect via [LinkedIn]([https://www.linkedin.com/in/moataz-ahmed-b02438255/])
